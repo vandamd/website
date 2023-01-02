@@ -23,7 +23,7 @@ highlight_code = false
 links = [
     { title = "Mail", href = "mailto:hi@vandam.tech" },
     { title = "GitHub", href = "https://github.com/vandamd"},
-    { title = "Resume", href = "https://vandam.tech/Resume.pdf" },
+    { title = "Resume", href = "/Resume.pdf" },
     # ...
 ]
 
