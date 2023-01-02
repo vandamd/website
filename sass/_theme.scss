@@ -1,0 +1,139 @@
+$foreground: #1A1A1A;
+$background: #F8F9FA;
+$secondary: #5C6166;
+$tertiary: #55B4D4;
+$accent: #1A1A1A;
+
+$foreground-dark: #FFFFFF;
+$background-dark: #1F2430;
+$secondary-dark: #CCCAC2;
+$tertiary-dark: #565B66;
+$accent-dark: #FFFFFF;
+
+@mixin light-theme {
+    color: $foreground;
+    background-color: $background;
+
+    ::selection {
+    background-color: #4CBF99;
+    }
+
+    .secondary {
+        color: $secondary;
+    }
+
+    a, a:link, a:visited {
+        color: $accent;
+    }
+
+    a:hover {
+        color: darken($accent, 30%);
+    }
+
+    blockquote {
+        border-left: 2px solid $secondary;
+    }
+
+    code {
+        background-color: $tertiary;
+    }
+
+    pre code {
+        background-color: transparent;
+    }
+
+    .footnote-definition sup {
+        color: $secondary;
+    }
+
+
+}
+
+@mixin dark-theme {
+    color: $foreground-dark;
+    background-color: $background-dark;
+
+    ::selection {
+    background-color: #6C5980;
+    }
+
+    .secondary {
+        color: $secondary-dark;
+    }
+
+    a, a:link, a:visited {
+        color: $accent-dark;
+    }
+
+    a:hover {
+        color: lighten($accent-dark, 10%);
+    }
+
+    blockquote {
+        border-left: 2px solid $secondary-dark;
+    }
+
+    code {
+        background-color: $tertiary-dark;
+    }
+
+    pre code {
+        background-color: transparent;
+    }
+
+    .footnote-definition sup {
+        color: $secondary-dark;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        @include light-theme;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        @include dark-theme;
+    }
+}
+
+.dark-mode-buttons {
+    position: absolute;
+
+    top: 1em;
+    right: 1em;
+}
+
+.dark-mode-button {
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+body:not(.dark-mode) {
+    @include light-theme;
+
+    #dark-mode-on {
+        display: inline;
+    }
+
+    #dark-mode-off {
+        display: none;
+    }
+}
+
+body.dark-mode {
+    @include dark-theme;
+
+    #dark-mode-on {
+        display: none;
+    }
+
+    #dark-mode-off {
+        display: inline;
+    }
+}

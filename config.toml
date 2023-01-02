@@ -1,0 +1,30 @@
+# The URL the site will be built for
+base_url = "https://vandam.tech"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = false
+
+# Theme
+# theme = "hook"
+
+# Page Title
+title = "Vandam"
+
+[markdown]
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = false
+
+[extra]
+# Put all your custom variables here
+links = [
+    { title = "Mail", href = "mailto:hi@vandam.tech" },
+    { title = "GitHub", href = "https://github.com/vandamd"},
+    { title = "Resume", href = "https://vandam.tech/Resume.pdf" },
+    # ...
+]
+
+hook_icon = "/favicon.png"

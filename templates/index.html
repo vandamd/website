@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block description %}{{ section.description | default(value=config.description) }}{% endblock description %}">
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    {% block extra_head %}
+    <link rel="stylesheet" href="{{ get_url(path='style.css', cachebust=true) }}">
+    {% endblock extra_head %}
+    <link rel="icon" href="{{ config.extra.hook_icon | safe }}">
+</head>
+<body>
+    {% block header %}
+    <header class="space">
+        <h1>{{ config.title }}</h1>
+        {% set linked_pages = section.pages | filter(attribute="extra.in_header") %}
+        {% if config.extra.links or linked_pages %}
+        <nav class="header-links">
+            {% for link in config.extra.links %}
+            <a href="{{ link.href }}">{{ link.title }}</a>
+            {% endfor %}
+            {% for page in linked_pages %}
+            <a href="{{ page.permalink }}">{{ page.title }}</a>
+            {% endfor %}
+        </nav>
+        {% endif %}
+    </header>
+    {% endblock header %}
+
+    {% block content %}
+    {% set blog = get_section(path="blog/_index.md") %}
+    {% if section.content or blog.pages %}
+    <main>
+        <h2>What I'm listening to</h2>
+        <div id="now-playing">Loading...</div>
+
+        <script>
+          let dots = 0;
+
+          function updateLoadingText() {
+            const loadingText = document.getElementById('now-playing');
+            dots = (dots + 1) % 4; // cycle through dots
+            loadingText.innerHTML = `Loading${'.'.repeat(dots)}`;
+          }
+
+          // update the loading text every 500 milliseconds
+          const intervalId = setInterval(updateLoadingText, 500);
+
+          const apiKey = 'e0359fa55e2ec8f912a81467e43bd946';
+          const user = 'vandamd';
+          const limit = 4;
+          const url = `http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=${apiKey}&limit=${limit}&format=json`;
+
+          let now = new Date();
+
+          // Set an interval to make the request to the Last.fm API every 5 seconds
+          setInterval(() => {
+            // Make the request to the Last.fm API
+            fetch(url)
+              .then(response => response.json()) // Parse the response as JSON
+              .then(data => {
+                // Get the now playing track
+                const track = data.recenttracks.track[0];
+
+                if (track['@attr'] && track['@attr'].nowplaying === 'true') {
+                  // Update the page with the artist and song name
+                  document.getElementById('now-playing').innerHTML = `
+
+                  <img src="now_playing_light.gif" style="width: 10px; height: 10px; "alt="Audio animation" id="dark-mode-on">
+                  <img src="now_playing_dark.gif" style="width: 10px; height: 10px; "alt="Audio animation" id="dark-mode-off">
+
+                   Listening now: ${track.name} - ${track.artist['#text']}`;
+                } else {
+                  const trackDate = new Date(track.date['#text']);
+                  const elapsed = now - trackDate; 
+
+                  // Calculate the elapsed time in minutes
+                  const elapsedMinutes = Math.floor(elapsed / 1000 / 60);
+
+                  let formattedDate;
+                  if (elapsedMinutes < 60) {
+                    formattedDate = `${elapsedMinutes} minutes ago`;
+                  } else if (elapsedMinutes < 1440) {
+                    // Calculate the elapsed time in hours
+                    const elapsedHours = Math.floor(elapsedMinutes / 60);
+                    formattedDate = `${elapsedHours} hours ago`;
+                  } else {
+                    // Use the original date in YYYY-MM-DD HH:MM format
+                    formattedDate = trackDate.toISOString().slice(0, 10) + ", " + trackDate.toISOString().slice(11, 16);
+                  }
+
+                  // Show the latest track that was played
+                  document.getElementById('now-playing').innerHTML = `${formattedDate} - ${track.name} by ${track.artist['#text']}`;
+                }
+
+                // Stop loading text
+                clearInterval(intervalId);
+
+              });
+          }, 2000); // Interval in milliseconds
+        </script>
+
+        {% if section.content %}
+        <div {% if blog.pages %}class="space"{% endif %}>
+            {{ section.content | safe }}
+        </div>
+        {% endif %}
+        {% if blog.pages %}
+
+        <h2>Posts</h2>
+        <!-- <ul> -->
+            {% for post in blog.pages | reverse %}
+            <!-- <li> -->
+                <p class="date">{{ post.date }} -
+                    <a href="{{ post.permalink | safe }}">{{ post.title }}</a>
+                </p>
+            <!-- </li> -->
+            {% endfor %}
+        <!-- </ul> -->
+        {% endif %}
+    </main>
+    {% endif %}
+    {% endblock content %}
+
+
+    <div class="dark-mode-buttons">
+        <button class="dark-mode-button" id="dark-mode-on"><img src="{{ get_url(path='dark_mode.svg') }}" width="24" height="24" alt="Dark mode" aria-label="dark mode toggle" title="Dark mode"></button>
+        <button class="dark-mode-button" id="dark-mode-off"><img src="{{ get_url(path='light_mode.svg') }}" width="24" height="24" alt="Light mode" aria-label="light mode toggle" title="Light mode"></button>
+    </div>
+    <script>
+        const cls = document.body.classList;
+        const getSessionTheme = sessionStorage.getItem("theme");
+        if (getSessionTheme === "dark") {
+            cls.toggle("dark-mode", true);
+        } else if (getSessionTheme === "light") {
+            cls.toggle("dark-mode", false);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            cls.toggle("dark-mode", true);
+        }
+
+        document.getElementById("dark-mode-on").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", true);
+            sessionStorage.setItem("theme", "dark");
+        });
+        document.getElementById("dark-mode-off").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", false);
+            sessionStorage.setItem("theme", "light");
+        });
+    </script>
+    <noscript>
+        <style>
+            .dark-mode-buttons {
+                display: none;
+            }
+        </style>
+    </noscript>
+</body>
+</html>
