@@ -52,10 +52,10 @@
           const limit = 4;
           const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=${apiKey}&limit=${limit}&format=json`;
 
-          let now = new Date();
-
           // Set an interval to make the request to the Last.fm API every 5 seconds
           setInterval(() => {
+
+            let now = new Date();
             // Make the request to the Last.fm API
             fetch(url)
               .then(response => response.json()) // Parse the response as JSON
