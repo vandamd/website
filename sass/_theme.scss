@@ -46,6 +46,10 @@ $accent-dark: #FFFFFF;
         color: $secondary;
     }
 
+    td {
+        border: 1px solid $accent;
+        padding: 10px;
+    }
 
 }
 
@@ -84,6 +88,11 @@ $accent-dark: #FFFFFF;
     .footnote-definition sup {
         color: $secondary-dark;
     }
+
+    td {
+        border: 1px solid $accent-dark;
+        padding: 10px;      
+    }    
 }
 
 @media (prefers-color-scheme: light) {
