@@ -8,7 +8,7 @@ I find window management one of the biggest weaknesses of macOS. However, it can
 
 Imagine having a hotkey that could do anything you want. That would be great, right? With what I'm going to show you, you can customise your own hotkeys and actions. It has truly improved the way I use my MacBook.
 
-## Goodbye Caps Lock, hello Hyper Key.
+## Goodbye Caps Lock, hello Hyper Key
 
 I rarely use the Caps Lock. Occasionally, I'll type in all caps to shout at someone over text, but otherwise it's not very useful for me. I can just hold down Shift! I’ve replaced it with something called the **Hyper Key**. 
 
