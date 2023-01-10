@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Vandam | About</title>
+    
+    <link rel="stylesheet" href="https://vandam.tech/style.css?h=1be34ae08220ef8b4fac7ee9f6a88ad71093eb45ecb9649e6ff9c3dab8f7c583">
+    
+    <link rel="icon" href="/favicon.png">
+</head>
+<body>
+    
+<header class="space">
+    <a href="https:&#x2F;&#x2F;vandam.tech">&LeftArrow; Home</a>
+</header>
+
+
+    
+<main>
+    <h1>About</h1>
+    
+    <div class="space"></div>
+    <p>Hey there! 👋🏻</p>
+<p>My name is Vandam and I'm a second year undergrad studying <a href="https://www.bristol.ac.uk/study/undergraduate/2023/engineering-maths/meng-eng-maths">Engineering Mathematics (MEng)</a> at the <a href="https://www.bristol.ac.uk">University of Bristol</a>.</p>
+<p>I'm having a blast learning all things Software Engineering, Data Science, ML, AI and Privacy related.</p>
+<p>On this website, I'll be posting thoughts, guides and try to convince you to give John Mayer a try. </p>
+<p>I also have a newsletter where I write about music, <a href="https://intl.substack.com">Interlude</a>.</p>
+
+</main>
+
+
+
+    <div class="dark-mode-buttons">
+        <button class="dark-mode-button" id="dark-mode-on"><img src="https://vandam.tech/dark_mode.svg" width="24" height="24" alt="Dark mode" aria-label="dark mode toggle" title="Dark mode"></button>
+        <button class="dark-mode-button" id="dark-mode-off"><img src="https://vandam.tech/light_mode.svg" width="24" height="24" alt="Light mode" aria-label="light mode toggle" title="Light mode"></button>
+    </div>
+    <script>
+        const cls = document.body.classList;
+        const getSessionTheme = sessionStorage.getItem("theme");
+        if (getSessionTheme === "dark") {
+            cls.toggle("dark-mode", true);
+        } else if (getSessionTheme === "light") {
+            cls.toggle("dark-mode", false);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            cls.toggle("dark-mode", true);
+        }
+
+        document.getElementById("dark-mode-on").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", true);
+            sessionStorage.setItem("theme", "dark");
+        });
+        document.getElementById("dark-mode-off").addEventListener("click", function(e) {
+            cls.toggle("dark-mode", false);
+            sessionStorage.setItem("theme", "light");
+        });
+    </script>
+    <noscript>
+        <style>
+            .dark-mode-buttons {
+                display: none;
+            }
+        </style>
+    </noscript>
+</body>
+</html>
