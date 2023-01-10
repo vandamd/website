@@ -116,7 +116,7 @@
 
         <h2>Posts</h2>
         <!-- <ul> -->
-            {% for post in blog.pages %}
+            {% for post in blog.pages | reverse %}
             <!-- <li> -->
                 <p class="date">{{ post.date }} -
                     <a href="{{ post.permalink | safe }}">{{ post.title }}</a>
