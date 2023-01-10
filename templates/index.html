@@ -29,7 +29,7 @@
     {% endblock header %}
 
     {% block content %}
-    {% set blog = get_section(path="blog/_index.md", sort="-date") %}
+    {% set blog = get_section(path="blog/_index.md") %}
     {% if section.content or blog.pages %}
     <main>
         <h2>What I'm listening to</h2>
